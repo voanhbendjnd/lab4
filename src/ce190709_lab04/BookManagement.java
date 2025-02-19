@@ -1,30 +1,8 @@
 
-import java.sql.*;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.*;
-import java.sql.ResultSet;
-import java.util.stream.Collectors;
-import java.io.PrintStream;
-import static java.lang.Character.isDigit;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.List;
 // Locale.setDefault(Locale.US);
 
 /**
@@ -34,66 +12,130 @@ import java.util.List;
 public class BookManagement {
 
     Scanner sc = new Scanner(System.in);
-    private ArrayList<Book> listBook = new ArrayList<>();
+    private ArrayList<Book> listEBook = new ArrayList<>();
 
     public BookManagement() {
     }
 
     public BookManagement(ArrayList<Book> listBook) {
-        this.listBook = listBook;
+        this.listEBook = listBook;
     }
 
     public void entryData() {
-        System.out.println("---- Add new ebook ----");
-        System.out.print("Input ID: ");
-        String id = sc.nextLine();
-        System.out.print("Input name: ");
-        String name = sc.nextLine();
-        System.out.print("Input year: ");
-        int year = sc.nextInt();
-        sc.nextLine();
-        System.out.print("Input authors: ");
-        String author = sc.nextLine();
-        System.out.print("Input size: ");
-        int size = sc.nextInt();
-        sc.nextLine();
-        this.listBook.add(new Book(id, name, year, author, size));
+        boolean check = true;
+        while (check) {
+            System.out.println("---- Add new ebook ----");
+            String id;
+            while (true) {
+                // kiểm tra id xem có bị trùng hem
+                boolean checkValidateId = true;
+                System.out.print("Input ID: ");
+                id = sc.nextLine();
+                for(Book x : this.listEBook){
+                    if(id.equals(x.getId())){
+                        checkValidateId = false;
+                    }
+                }
+                if (id.length() != 5 || !checkValidateId) {
+                    System.out.println("must be exactly 5 characters and no duplicated with exist ID in Database(your list).");
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            String name;
+            while (true) {
+                System.out.print("Input name: ");
+                name = sc.nextLine();
+                if (name.trim().isEmpty()) {
+                    System.out.println("name: not empty");
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            int year;
+            while (true) {
+                System.out.print("Input year: ");
+                year = sc.nextInt();
+                if (year < 1800 || year > 2025) {
+                    System.out.println("must be in range 1800 to 2025 and not empty");
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            sc.nextLine();
+            String author;
+            while (true) {
+                System.out.print("Input authors: ");
+                author = sc.nextLine();
+                if (author.trim().isEmpty()) {
+                    System.out.println("not empty");
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            int size;
+            while (true) {
+                System.out.print("Input size (kilobyte): ");
+                size = sc.nextInt();
+                if (size <= 0) {
+                    System.out.println("must be greater than 0 and not empty");
+                }
+                else{
+                    break;
+                }
+            }
+            sc.nextLine();
+            this.listEBook.add(new Book(id, name, year, author, size));
+            System.out.println("Ebook created and added to list of ebooks successful!");
+            break;
+        }
+
     }
 
     public ArrayList<Book> getListBook() {
-        return listBook;
+        return listEBook;
     }
 
     public void setListBook(ArrayList<Book> listBook) {
-        this.listBook = listBook;
+        this.listEBook = listBook;
     }
 
     public void printData() {
         int cnt = 1;
-        for (Book x : this.listBook) {
+        for (Book x : this.listEBook) {
             System.out.print(cnt++);
             x.showInfor();
         }
     }
 
     public void sort() {
-        Collections.sort(this.listBook, new Comparator<Book>() {
+        ArrayList<Book> list = new ArrayList<>();
+        for (Book x : this.listEBook) {
+            list.add(x);
+        }
+        Collections.sort(list, new Comparator<Book>() {
             @Override
             public int compare(Book o1, Book o2) {
                 return o1.getSize() - o2.getSize();
             }
 
         });
+
         int cnt = 1;
-        for (Book x : this.listBook) {
+        for (Book x : list) {
             System.out.print(cnt++);
             x.showInfor();
         }
+
     }
 
     public int searchBookById(String id) {
-        for (int i = 0; i < this.listBook.size(); i++) {
-            if (id.equals(this.listBook.get(i).getId())) {
+        for (int i = 0; i < this.listEBook.size(); i++) {
+            if (id.equals(this.listEBook.get(i).getId())) {
                 return i;
             }
         }
@@ -103,34 +145,26 @@ public class BookManagement {
 
     public Book searchBookObjectById(String id) {
         int cnt = 1;
-        for (Book x : this.listBook) {
+        for (Book x : this.listEBook) {
             if (id.equals(x.getId())) {
-                x.showInfor();
-                break;
+                return x;
             }
         }
-        return new Book();
-
+        return null;
     }
 
     public ArrayList<Book> biggestSize() {
         int maxSize = -1;
-        for (Book x : this.listBook) {
+        for (Book x : this.listEBook) {
             if (maxSize <= x.getSize()) {
                 maxSize = x.getSize();
             }
         }
         ArrayList<Book> book = new ArrayList<>();
-        for (Book x : this.listBook) {
+        for (Book x : this.listEBook) {
             if (x.getSize() == maxSize) {
                 book.add(x);
             }
-        }
-        int cnt = 1;
-        BookManagement mn = new BookManagement();
-        for (Book x : book) {
-            System.out.print(cnt++);
-            x.showInfor();
         }
         return book;
     }

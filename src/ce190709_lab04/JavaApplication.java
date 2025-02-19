@@ -1,34 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 
-import java.sql.*;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.*;
-import java.sql.ResultSet;
-import java.util.stream.Collectors;
-import java.io.PrintStream;
-import static java.lang.Character.isDigit;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.List;
 // Locale.setDefault(Locale.US);
 
 /**
@@ -51,18 +23,21 @@ public class JavaApplication {
             System.out.println("6. Quit.");
             System.out.print("Please select a function: ");
             String n = sc.nextLine();
-
             switch (n) {
-
                 case "1":
-                    bk.entryData();
-                    System.out.println("Ebook created and added to list of ebooks successful!");
+                    bk.entryData(); 
                     break;
                 case "2":
                     bk.printData();
                     break;
                 case "3":
-                    bk.biggestSize();
+                    ArrayList<Book> list = new ArrayList<>();
+                    list.addAll(bk.biggestSize());
+                    int cnt = 1;
+                    for (Book x : list) {
+                        System.out.print(cnt++);
+                        x.showInfor();
+                    }
                     break;
                 case "4":
                     System.out.print(">>> Please enter book's ID to search: ");
@@ -70,17 +45,19 @@ public class JavaApplication {
                     System.out.print("Search Results: ");
                     if (bk.searchBookById(id) == -1) {
                         System.out.print("Not found");
-                    }
-                    else{
+                    } else {
                         System.out.println("");
-                        bk.searchBookObjectById(id);
-                       }
-                  break;
+                        System.out.print("1");
+                        bk.searchBookObjectById(id).showInfor();
+                    }
+                    break;
                 case "5":
                     bk.sort();
+                    break;
                 case "6":
                     System.out.println("THANK FOR USING OUR APPLICATION!");
                     System.out.println("SEE YOU AGAIN");
+                    checkBigRing = false;
                 default:
 
             }

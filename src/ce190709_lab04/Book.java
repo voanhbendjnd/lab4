@@ -3,48 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-
-import java.sql.*;
-import javax.swing.*; 
-import javax.swing.table.DefaultTableModel; 
-import java.awt.*; 
-import java.awt.event.*;
-import java.sql.ResultSet;
-import java.util.stream.Collectors;
-import java.io.PrintStream;
-import static java.lang.Character.isDigit;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.List;
-// Locale.setDefault(Locale.US);
-
 /**
  *
  * @author Vo Anh Ben - CE190709
  */
 public class Book {
-    private String id;
+    private String ID;
     private String name;
     private int year;
     private String author;
     private int size;
 
     public Book(String id, String name, int year, String author, int size) {
-        this.id = id;
+        this.ID = id;
         this.name = name;
         this.year = year;
         this.author = author;
@@ -55,11 +26,11 @@ public class Book {
     }
 
     public String getId() {
-        return id;
+        return ID;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.ID = id;
     }
 
     public String getName() {
@@ -95,6 +66,6 @@ public class Book {
     }
     
     public void showInfor(){
-        System.out.println(String.format(". [%s]%s - (%d) - %s - %sKB", this.id, this.author, this.year, this.name, this.size));
+        System.out.println(String.format(". [%s]%s - (%d) - %s - %sKB", this.ID, this.author, this.year, this.name, this.size));
     }
 }
