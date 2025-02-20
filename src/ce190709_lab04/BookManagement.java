@@ -2,6 +2,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.Scanner;
 // Locale.setDefault(Locale.US);
 
@@ -37,7 +38,7 @@ public class BookManagement {
                     }
                 }
                 if (id.length() != 5 || !checkValidateId) {
-                    System.out.println("must be exactly 5 characters and no duplicated with exist ID in Database(your list).");
+                    System.out.println("ID must be exactly 5 characters and no duplicated with exist ID in Database(your list).");
                     continue;
                 } else {
                     break;
@@ -48,7 +49,7 @@ public class BookManagement {
                 System.out.print("Input name: ");
                 name = sc.nextLine();
                 if (name.trim().isEmpty()) {
-                    System.out.println("name: not empty");
+                    System.out.println("Name not empty");
                     continue;
                 } else {
                     break;
@@ -59,7 +60,7 @@ public class BookManagement {
                 System.out.print("Input year: ");
                 year = sc.nextInt();
                 if (year < 1800 || year > 2025) {
-                    System.out.println("must be in range 1800 to 2025 and not empty");
+                    System.out.println("Year must be in range 1800 to 2025 and not empty");
                     continue;
                 } else {
                     break;
@@ -71,7 +72,7 @@ public class BookManagement {
                 System.out.print("Input authors: ");
                 author = sc.nextLine();
                 if (author.trim().isEmpty()) {
-                    System.out.println("not empty");
+                    System.out.println("Author not empty");
                     continue;
                 } else {
                     break;
@@ -80,15 +81,20 @@ public class BookManagement {
             int size;
             while (true) {
                 System.out.print("Input size (kilobyte): ");
-                size = sc.nextInt();
+                String sizeIn = sc.nextLine();
+                if(sizeIn.trim().isEmpty()){
+                    System.out.println("Size must be greater than 0 and not empty");
+                    continue;
+                }
+                size = Integer.parseInt(sizeIn);
                 if (size <= 0) {
-                    System.out.println("must be greater than 0 and not empty");
+                    System.out.println("Size must be greater than 0 and not empty");
+                    continue;
                 }
                 else{
                     break;
                 }
             }
-            sc.nextLine();
             this.listEBook.add(new Book(id, name, year, author, size));
             System.out.println("Ebook created and added to list of ebooks successful!");
             break;

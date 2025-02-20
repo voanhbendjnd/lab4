@@ -44,7 +44,7 @@ public class JavaApplication {
                     String id = sc.nextLine();
                     System.out.print("Search Results: ");
                     if (bk.searchBookById(id) == -1) {
-                        System.out.print("Not found");
+                        System.out.println("Not found");
                     } else {
                         System.out.println("");
                         System.out.print("1");
@@ -59,6 +59,7 @@ public class JavaApplication {
                     System.out.println("SEE YOU AGAIN");
                     checkBigRing = false;
                 default:
+                    System.out.println("The function of application must be from 1 to 6!");
 
             }
         }
